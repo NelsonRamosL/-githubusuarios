@@ -43,6 +43,7 @@ const capturaDatosDom = (nombre, pagina, repoPagina) => {
     Promise.all([getUser(nombre), getRepo(nombre, pagina, repoPagina)])
         .then(resp => {
             let usuario = resp[0], post = resp[1];
+    if (usuario.message !="Not Found" )  {  // caso que el mensaje retornado por la API sea “Not Found”
             paginador += `
    <div class="col">
    <h1>Datos de Usuario</h1>
@@ -77,7 +78,20 @@ console.log(element);
  */
 
     resultados.innerHTML = paginador;
-        })
+} else {
+
+/**
+ 5. En el caso que el mensaje retornado por la API sea “Not Found”, indicar mediante
+una ventana emergente que el usuario no existe y no mostrar ningún tipo de
+información en la sección de resultado en el documento HTML.
+ */
+    $('.modal').modal('show');
+    console.log("errorrrr usuario no encontrado");
+}
+
+
+})
+
         .catch(err => console.log('err', err));
 
 
